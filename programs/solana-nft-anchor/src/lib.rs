@@ -2,21 +2,17 @@ use anchor_lang::prelude::*;
 use anchor_spl::{
     associated_token::AssociatedToken,
     metadata::{
-        create_master_edition_v3,
-        create_metadata_accounts_v3,
-        CreateMasterEditionV3,
-        CreateMetadataAccountsV3,
-        Metadata,
-    },
-    token::{mint_to, Mint, MintTo, Token, TokenAccount },
+        create_master_edition_v3, create_metadata_accounts_v3, CreateMasterEditionV3,
+        CreateMetadataAccountsV3, Metadata, 
+    }, 
+    token::{mint_to, Mint, MintTo, Token, TokenAccount},
 };
-
 use mpl_token_metadata::{
     pda::{find_master_edition_account, find_metadata_account},
+    state::DataV2,
 };
 
 declare_id!("DC7xyFp7VkGB4r6ifceY191UrTArRRoA2rgQGertxho4");
-
 #[program]
 pub mod solana_nft_anchor {
 
@@ -24,8 +20,8 @@ pub mod solana_nft_anchor {
 
     pub fn init_nft(
         ctx: Context<InitNFT>,
-        name: String,
-        symbol: String,
+        name: String,  
+        symbol: String, 
         uri: String,
     ) -> Result<()> {
         // create mint account
@@ -54,7 +50,7 @@ pub mod solana_nft_anchor {
             },
         );
 
-        let data_v2 = anchor_spl::metadata::mpl_token_metadata::types::DataV2 {
+        let data_v2 = DataV2 {
             name: name,
             symbol: symbol,
             uri: uri,
@@ -113,7 +109,7 @@ pub struct InitNFT<'info> {
         mut,
         address=find_metadata_account(&mint.key()).0,
     )]
-    pub metadata_account: AccountInfo<'info>,
+    pub metadata_account: AccountInfo<'info>, 
     /// CHECK: address
     #[account(
         mut,
